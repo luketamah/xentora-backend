@@ -14,7 +14,6 @@ import asyncio
 import resend
 import jwt
 from passlib.context import CryptContext
-from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -274,3 +273,7 @@ app.add_middleware(
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+if __name__ == "__main__":
+    import os
+    PORT = int(os.environ.get("PORT", 5000))  # Render assigns this automatically
+    app.run(host="0.0.0.0", port=PORT)
